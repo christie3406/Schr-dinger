@@ -114,16 +114,12 @@ m = 1  # Masse
 hbar = 1  # reduzierte Plank'sche Konstante
 a = 128  # Länge der X-Achse
 
-
-
 x, dx = np.linspace(0, a, grid, endpoint=False, retstep=True)
 e = 1   # Energie des Wellenpakets (1 bis 25)
 V0 = 5  # Potentialenergie Barriere (konstant = 5)
 psi0 = eigenzustand_oszillator(w=1, n=1, x=x)  # Ausgangswellenfunktion
 V = harmonisches_potential(x=x)  # Potential
 
-psi0 = eigenzustand_oszillator(w=1, n=1, x=x)  # Ausgangswellenfunktion
-V = harmonisches_potential(x=x)  # Potential
 
 # HAUPTTEIL
 H = hamiltonian(grid, dx)
