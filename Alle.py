@@ -67,10 +67,18 @@ def harmonisches_potential(w, x):
     # Harmonisches Potenzial mit der Kreisfrequenz w- für den harmonischen Oszillator
     return (w * x) ** 2 / 2
 
+def potentialbarriere(x, V0, w):
+    # Potentialbarriere mit der Höhe V0 und der Breite w- für den Tunneleffekt
+    return np.where((0 <= x) & (x < w), V0, 0.0)
 
 
 
 # AUSGANGSWELLENFUNKTIONEN
+def gausssche_wellenpaket(x, x0, sigma0, e):
+    # Gaußsches Wellenpaket bei x0 +/- Breite sigma0 mit Energie E.
+    p0 = np.sqrt(2 * e)
+    A = (2 * np.pi * sigma0 ** 2) ** (-0.25)
+    return A * np.exp(1j * p0 * x - ((x - x0) / (2 * sigma0)) ** 2)
 
 
 def eigenzustand_kasten(n, a, x):
@@ -109,28 +117,10 @@ a = 128  # Länge der X-Achse
 
 
 x, dx = np.linspace(0, a, grid, endpoint=False, retstep=True)
-
-def potentialbarriere(x, V0, w):
-    # Potentialbarriere mit der Höhe V0 und der Breite w- für den Tunneleffekt
-    return np.where((0 <= x) & (x < w), V0, 0.0)
-
-def gausssche_wellenpaket(x, x0, sigma0, e):
-    # Gaußsches Wellenpaket bei x0 +/- Breite sigma0 mit Energie E.
-    p0 = np.sqrt(2 * e)
-    A = (2 * np.pi * sigma0 ** 2) ** (-0.25)
-    return A * np.exp(1j * p0 * x - ((x - x0) / (2 * sigma0)) ** 2)
-
 e = 1   # Energie des Wellenpakets (1 bis 25)
 V0 = 5  # Potentialenergie Barriere (konstant = 5)
 psi0 = eigenzustand_oszillator(w=1, n=1, x=x)  # Ausgangswellenfunktion
 V = harmonisches_potential(x=x)  # Potential
-
-# Misst wie viel Prozent der ursprünglichen Welle durch die Barriere gegangen ist
-transmission = sum(aufenthaltswahrscheinlichkeit[20][520:-1])/(grid/a)
-print(round(transmission, 2))
-
-
-
 
 psi0 = eigenzustand_oszillator(w=1, n=1, x=x)  # Ausgangswellenfunktion
 V = harmonisches_potential(x=x)  # Potential
@@ -139,6 +129,10 @@ V = harmonisches_potential(x=x)  # Potential
 H = hamiltonian(grid, dx)
 simulieren(psi0, H, 1.0)
 animation()
+
+# Misst wie viel Prozent der ursprünglichen Welle durch die Barriere gegangen ist
+transmission = sum(aufenthaltswahrscheinlichkeit[20][520:-1])/(grid/a)
+print(round(transmission, 2))
 
 # Normalisierung prüfen- Summe der Aufenthaltswahrscheinlichkeiten sollte 1 geben
 print(sum(aufenthaltswahrscheinlichkeit[0]) / (grid / a))
