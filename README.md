@@ -11,3 +11,4 @@ harmonischer-oszillator-eigenfunktionen berechnet die Wahrscheinlichkeitsdichte 
 
 potentialbarriere.py simuliert ein Wellenpaket durch eine Potentialbarriere. 
 
+transmission berechnen.py berechnet die transmission eiens Teilchens durch eine Potentialbarriere analytisch. 
